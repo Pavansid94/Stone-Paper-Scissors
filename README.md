@@ -3,6 +3,7 @@ The Stone Paper Scissors game presented as a simple single-page Web app
 
 ## Description
 The game is a simple single page Web app. it can be played in two modes:
+
 [1] Unlimited mode: Enter name and select Unlimited rounds to keep playing Indefinitely.
 [2] limited mode: Enter name and Number of rounds to keep playing until you finish. After this, you can extend the rounds and (also, deselect 'New Game' here) keep playing the same game.
 
@@ -13,5 +14,6 @@ The Application consists of two Web applications containing a Spring Boot based 
 
 The Backend application can be run by selecting 'GameApplication'->Run as -> Spring Boot App. The application runs at port 8080.
 The Frontend application can be run in two ways:
+
 [1] From command-line, run the command 'npm install' and then 'ng build' to generate folder 'dist'. Go to 'dist' and do a 'ng-serve' OR
 [2] By simply running commands 'npm install' and 'ng serve' through command line at the folder containing package.json. 
