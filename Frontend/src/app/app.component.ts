@@ -57,6 +57,9 @@ export class AppComponent implements OnInit {
       this.gameService.getCurrentPlayer().subscribe((value) => {
         this.playerName = value;
       })
+      this.gameService.getComputer().subscribe((value) => {
+        this.computerName = value
+      })
       this.gameService.getNoOfRounds().subscribe((value) => {
         this.noOfRounds = value;
       })
@@ -69,7 +72,7 @@ export class AppComponent implements OnInit {
     this.playerChoice = choice;
     let gameId = this.localStorageService.getData("gameId")
     this.recentMatchups = ''
-    
+
     this.backendService.playerChoice(Number(gameId), this.playerChoice).subscribe(
       (response: any) => {
         //obtain previous match results and choices
@@ -107,42 +110,32 @@ export class UserDetailDialog {
     private localStorageService: LocalStorageService,
     private gameService: GameService,
     private fb: FormBuilder) {
+    //Using form with simple Validations	
+    this.form = fb.group({
+      number: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
+      text: ['', [Validators.required, Validators.pattern("^[a-zA-Z0-9]*$")]],
+      newGame: new FormControl(true),
+      unlimitedRounds: new FormControl({ value: false, disabled: this.gameOver })
+    })
 
-      this.form = fb.group({
-        number: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
-        text: ['', [Validators.required, Validators.pattern("^[a-zA-Z0-9]*$")]],
-        newGame:  new FormControl(true),
-        unlimitedRounds: new FormControl({value:false,disabled: this.gameOver})
-      })
-
-      //get some variables from observables
+    //get some variables from observables
     this.gameService.getCurrentPlayer().subscribe((value) => {
       this.form.controls['text'].reset(value)
-      //this.form.value.text = value;
     })
     this.gameService.getNoOfRounds().subscribe((value) => {
       this.form.controls['number'].reset(value)
-      //this.form.value.number = Number(value);
     })
     this.gameService.getGameOver().subscribe((val: any) => {
       this.gameOver = val;
-      this.form.controls['unlimitedRounds'].reset({value: !val, disabled:this.gameOver})
-
-      // if(this.form.controls.unlimitedRounds.value == true){
-      //   this.form.get('number')?.disable()
-      // }
-      // else{
-      //   this.form.get('number')?.enable()
-      // }
+      this.form.controls['unlimitedRounds'].reset({ value: !val, disabled: this.gameOver })
     })
   }
 
   form: FormGroup = new FormGroup({});
   gameOver: any;
   newGame = true
-  //unlimitedRounds = false
 
-  get formControls(){
+  get formControls() {
     return this.form.controls;
   }
 
@@ -174,7 +167,7 @@ export class UserDetailDialog {
         this.form.value.number = 9999
       }
       let gameId: Number = Number(this.localStorageService.getData("gameId"))
-      this.backendService.increaseRounds(gameId,this.form.value.number ).subscribe(
+      this.backendService.increaseRounds(gameId, this.form.value.number).subscribe(
         (response: any) => {
           //set|update some variables
           this.setApplicationVariables(response);
@@ -190,7 +183,7 @@ export class UserDetailDialog {
 
   private setApplicationVariables(response: any) {
     this.localStorageService.saveData("gameId", response.id.toString());
-    this.localStorageService.saveData("computerName", response.playerTwo);
+    this.gameService.setComputer(response.playerTwo)
     this.gameService.setCurrentPlayer(response.playerOne)
     this.gameService.setNoOfRounds(response.noOfRounds)
   }

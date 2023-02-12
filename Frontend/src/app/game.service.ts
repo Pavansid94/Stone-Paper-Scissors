@@ -11,6 +11,8 @@ export class GameService {
   gameOver$: BehaviorSubject<Boolean> = new BehaviorSubject<Boolean>(false);
   winCounter$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   lossCounter$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  computer$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
   constructor() { }
 
   setNoOfRounds(num: number) {
@@ -19,6 +21,14 @@ export class GameService {
 
   getNoOfRounds(): Observable<Number> {
     return this.noOfRounds$.asObservable();
+  }
+
+  setComputer(name: string) {
+    this.computer$.next(name)
+  }
+
+  getComputer(): Observable<string> {
+    return this.computer$.asObservable();
   }
 
   setCurrentPlayer(name: string) {

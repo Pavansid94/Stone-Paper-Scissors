@@ -1,44 +1,46 @@
 <!--User form with some validations-->
 <form [formGroup]="form">
-<h3 mat-dialog-title style="margin-left: 25%;"> Enter Details</h3>
-<div style="color:red;display: flex;text-align: center;font-size: 15px;">
-  <span [hidden]=!gameOver> All Rounds completed, extend the rounds to continue the same game (OR select New
-    Game)</span>
-</div>
-<div mat-dialog-content fxLayout="column" fxLayoutAlign="space-between">
-  <p>Name</p>
-  <mat-form-field appearance="fill">
-    <input matInput placeholder="Enter name" required formControlName="text"
-      required minlength="4">
-  </mat-form-field>
-
-  <div *ngIf="formControls.text.invalid && (formControls.text.dirty || formControls.text.touched)" class="alert">
-
-    <div style="color:red;text-align: center;font-size: 15px;" *ngIf="formControls.text.errors?.['required']">
-      Name is required.
-    </div>
-    <div style="color:red;text-align: center;font-size: 15px;" *ngIf="formControls.text.errors?.['minlength']">
-      Name must be at least 4 characters long.
-    </div>
-    <div style="color:red;text-align: center;font-size: 15px;" *ngIf="formControls.text.errors?.pattern">
-      Enter only Alpha numeric Characters
-    </div>
+  <h3 mat-dialog-title style="margin-left: 25%;"> Enter Details</h3>
+  <div style="color:red;display: flex;text-align: center;font-size: 15px;">
+    <span [hidden]=!gameOver> All Rounds completed, extend the rounds to continue the same game (OR select New
+      Game)</span>
   </div>
+  <div mat-dialog-content fxLayout="column" fxLayoutAlign="space-between">
+    <p>Name</p>
+    <mat-form-field appearance="fill">
+      <input matInput placeholder="Enter name" required formControlName="text" required minlength="4">
+    </mat-form-field>
 
-  <p>Number of Rounds</p>
-  <mat-form-field appearance="fill">
-    <input matInput formControlName="number" placeholder="Number of Rounds">
-  </mat-form-field>
+    <div *ngIf="formControls.text.invalid && (formControls.text.dirty || formControls.text.touched)" class="alert">
 
-  <div *ngIf="formControls.number.touched && formControls.number.invalid" class="alert alert-danger">
-    <div style="color:red;text-align: center;font-size: 15px;" *ngIf="formControls.number.errors?.required">Number is required.</div>
-    <div style="color:red;text-align: center;font-size: 15px;" *ngIf="formControls.number.errors?.pattern">Enter only number.</div>
+      <div style="color:red;text-align: center;font-size: 15px;" *ngIf="formControls.text.errors?.['required']">
+        Name is required.
+      </div>
+      <div style="color:red;text-align: center;font-size: 15px;" *ngIf="formControls.text.errors?.['minlength']">
+        Name must be at least 4 characters long.
+      </div>
+      <div style="color:red;text-align: center;font-size: 15px;" *ngIf="formControls.text.errors?.pattern">
+        Enter only Alpha numeric Characters
+      </div>
+    </div>
+
+    <p>Number of Rounds</p>
+    <mat-form-field appearance="fill">
+      <input matInput formControlName="number" placeholder="Number of Rounds">
+    </mat-form-field>
+
+    <div *ngIf="formControls.number.touched && formControls.number.invalid" class="alert alert-danger">
+      <div style="color:red;text-align: center;font-size: 15px;" *ngIf="formControls.number.errors?.required">Number is
+        required.</div>
+      <div style="color:red;text-align: center;font-size: 15px;" *ngIf="formControls.number.errors?.pattern">Enter only
+        number.</div>
+    </div>
+
+    <mat-checkbox formControlName="newGame">New Game?</mat-checkbox>
+    <mat-checkbox formControlName="unlimitedRounds" [disabled]="((!formControls.text.dirty) && gameOver)">Unlimited
+      Rounds?</mat-checkbox>
   </div>
-
-  <mat-checkbox formControlName="newGame">New Game?</mat-checkbox>
-  <mat-checkbox formControlName="unlimitedRounds" [disabled]="((!formControls.text.dirty) && gameOver)">Unlimited Rounds?</mat-checkbox>
-</div>
-<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-evenly">
-  <button mat-button mat-dialog-close cdkFocusInitial (click)="setTheGame()">Now, let's play!</button>
-</div>
+  <div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-evenly">
+    <button mat-button mat-dialog-close cdkFocusInitial (click)="setTheGame()">Now, let's play!</button>
+  </div>
 </form>
