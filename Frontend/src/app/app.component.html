@@ -1,0 +1,72 @@
+<!-- Toolbar -->
+<div class="toolbar" role="banner">
+  <img width="40" alt="Stone Paper Scissors Logo" src="./../assets/rock-paper-scissor.png" />
+  <span>Stone Paper Scissors!</span>
+  <div class="spacer"></div>
+  <button mat-raised-button (click)="openDialog()" style="padding: 0.1%;margin-right: 1%;background-color: black;"><span style = "color: white;">New Game</span></button>
+</div>
+
+<!-- Stone Paper Scissors -->
+<div class="content" role="main">
+  <div class="card-container">
+    <div class="post">
+      <a class="card" target="_blank" rel="noopener" (click)="setPlayerChoice('STONE')">
+        <img src="./../assets/Font_Awesome_5_regular_hand-ROCK.svg" width="80" height="80" />
+      </a>
+      <p style="display: inline;margin-left: 45%;">Stone</p>
+    </div>
+    <div class="post">
+      <a class="card" target="_blank" rel="noopener" (click)="setPlayerChoice('PAPER')">
+        <img src="./../assets/Font_Awesome_5_regular_hand-PAPER.svg" width="80" height="80" />
+      </a>
+      <p style="display: inline;margin-left: 45%;">Paper</p>
+    </div>
+    <div class="post">
+      <a class="card" target="_blank" rel="noopener" (click)="setPlayerChoice('SCISSOR')">
+        <img src="./../assets/Font_Awesome_5_regular_hand-SCISSOR.svg" width="80" height="80" />
+      </a>
+      <p style="display: inline;margin-left: 45%;">Scissor</p>
+    </div>
+  </div>
+
+  <!-- Showing scores -->
+  <div style="margin-top: 5%; border: 3px solid grey;padding: 0% 2% 0% 2%;width:300px;border-radius: 5px;"
+    fxLayout="row" fxLayoutAlign="space-evenly space-evenly">
+    <div fxLayout="column" fxLayoutAlign="end space-evenly" style="border-right: 1px solid black;padding: 0% 15%;">
+      <h3 style=" font-weight: 600;">{{ playerName}}</h3>
+      <h3 fxLayoutAlign="center space-evenly" style="color: #ABB700;">{{ winCounter }}</h3>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="end space-evenly" style="padding: 0% 0% 0% 5%;">
+      <h3 style=" font-weight: 600;">{{ computerName }}</h3>
+      <h3 fxLayoutAlign="center space-evenly" style="color: #ABB700;">{{ lossCounter }}</h3>
+    </div>
+  </div>
+
+   <!-- Showing versus -->
+  <div fxLayout="row" fxLayoutAlign="space-evenly" style="margin-top: 5%">
+    <div class="post card-container" [hidden]="!playerChoice">
+      <img
+        src='{{"./../assets/Font_Awesome_5_regular_hand-" + (playerChoice == "STONE"? "ROCK":(playerChoice == "PAPER"? "PAPER": "SCISSOR")) + "_selected.svg"}}'
+        width="100" height="100" />
+      <p style="margin-left: 30%;">Your Choice</p>
+    </div>
+
+    <div class="post card-container" [hidden]="!computer">
+      <img
+        src='{{"./../assets/Font_Awesome_5_regular_hand-"+(computer == "STONE"? "ROCK":(computer == "PAPER"? "PAPER": "SCISSOR")) +"_selected.svg"}}'
+        width="100" height="100" />
+      <p style="margin-left: 30%;"> Computer Choice</p>
+    </div>
+
+  </div>
+
+  <!-- All recent results -->
+  <h1 style="margin-top: 3%;" [hidden]="!result"> {{(result == 'WIN'? 'You WON!':(result == 'LOSS'?' You LOST!':'You Tied!'))}}</h1>
+  <h3 [hidden]="!result">Recent Results: </h3>
+  <div class="terminal" [hidden]="!recentMatchups">
+    <pre>{{"(Recent First)  " + recentMatchups}}</pre>
+  </div>
+
+
+
+</div>
